@@ -1,10 +1,11 @@
 /******************************************************************************/
 /* System Level #define Macros                                                */
 /******************************************************************************/
-
-/* TODO Define system operating frequency */
+#ifndef __SYSTEM_H
+#define __SYSTEM_H
 
 /* Microcontroller MIPs (FCY) */
+
 #define SYS_FREQ        8000000L
 #define FCY             SYS_FREQ/4
 
@@ -17,3 +18,4 @@ functions, and other non-peripheral microcontroller initialization functions
 go here. */
 
 void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
+#endif

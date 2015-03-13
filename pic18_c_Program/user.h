@@ -1,13 +1,15 @@
 /******************************************************************************/
 /* User Level #define Macros                                                  */
 /******************************************************************************/
-
-/* TODO Application specific user parameters used in user.c may go here */
-
+#ifndef __USER_H
+#define __USER_H
 /******************************************************************************/
 /* User Function Prototypes                                                   */
 /******************************************************************************/
 
-/* TODO User level functions prototypes (i.e. InitApp) go here */
-
-void InitApp(void);         /* I/O and Peripheral Initialization */
+extern void InitializeTimer0(void);  //InitializeTimer0 to work as tick
+extern void InitializeGPIOs(void);          //Initialize GPIOs; calls various required GPIOs to be used.
+extern void ConfigurePortB(void);           //Configure PORTB
+extern void EnableInterrupt(void);   //Enable Interrupts
+extern void InitApp(void);           //I/O and Peripheral Initialization 
+#endif

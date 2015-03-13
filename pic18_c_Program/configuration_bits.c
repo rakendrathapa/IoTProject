@@ -44,7 +44,6 @@
 /*                                                                            */
 /******************************************************************************/
 
-/* TODO Fill in your configuration bits here using the config generator.      */
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 

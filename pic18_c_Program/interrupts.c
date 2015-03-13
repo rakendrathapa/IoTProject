@@ -57,9 +57,8 @@ void high_isr(void)
       {
           /* Unhandled interrupts */
       }
-
-#endif
-
+     
+#endif           
 }
 
 /* Low-priority interrupt routine */
@@ -81,8 +80,6 @@ void low_isr(void)
 
 #if 0
 
-      /* TODO Add Low Priority interrupt routine code here. */
-
       /* Determine which flag generated the interrupt */
       if(<Interrupt Flag 1>)
       {
@@ -98,5 +95,10 @@ void low_isr(void)
       }
 
 #endif
+      if(INTCONbits.TMR0IF){
+          PORTBbits.RB4=~PORTBbits.RB4;
+          WriteTimer0(0xFFFF - 0x1F4 + 0x02);      //500-2 to adjust for 2 instruction cycles taken.
+          INTCONbits.TMR0IF=0;
+      }
 
 }
