@@ -18,12 +18,35 @@
 #endif
 #include "user.h"
 #include "timers.h"
+#include "usart.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
+void InitializeUSART(void)
+{
+    unsigned char config=0, spbrg=0, baudconfig=0, i=0;
+    CloseUSART();   //turn off usart if was previously on
+    //-----configure USART -----
+    config = USART_TX_INT_OFF | USART_RX_INT_OFF | USART_ASYNCH_MODE | USART_EIGHT_BIT |
+    USART_CONT_RX | USART_BRGH_LOW;
+    //-----SPBRG needs to be changed depending upon oscillator frequency-------
+    spbrg = 12; //At 8Mhz of oscillator frequency & baud rate of 9600.
+    OpenUSART(config, spbrg); //API configures USART for desired parameters
+    baudconfig = BAUD_8_BIT_RATE | BAUD_AUTO_OFF;
+    baudUSART (baudconfig);
+    return;
+}
+//single USART character transmission
+void putc( void* p, char Txdata)
+{
+    while(BusyUSART()); //Check if Usart is busy or not
+    putcUSART(Txdata); //transmit the string
+    return;
+}
+
 void InitializeTimer0(void)
 {
      unsigned char config=0x00;
@@ -63,7 +86,7 @@ void InitApp(void)
     /* Initialize User Ports/Peripherals/Project */
     INTCON=0x00;
     InitializeTimer0();
-
+    InitializeUSART();
     /* Setup analog functionality and port direction */
 
     /* Initialize peripherals */
