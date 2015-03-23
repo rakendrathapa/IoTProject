@@ -18,8 +18,8 @@
 
 #include "system.h"        /* System funct/params, like osc/peripheral config */
 #include "user.h"          /* User funct/params, such as InitApp */
-#include "printf.h"        /* Provide printf Functionality*/
-
+#include "printf.h"
+#include "sralloc.h"
 /******************************************************************************/
 /* User Global Variable Declaration                                           */
 /******************************************************************************/
@@ -32,23 +32,39 @@
 
 void main(void)
 {
-    unsigned char a='a';
-    int data=100;
-    unsigned char *Name="Rakendra";
+    unsigned char *a;
+    int *data;
+    unsigned char *Name;
+
     /* Configure the oscillator for the device */
     ConfigureOscillator();
 
     /* Initialize I/O and Peripherals for application */
     InitApp();
     /* TODO <INSERT USER APPLICATION CODE HERE> */
-    init_printf(NULL,putc);
     printf("Hello World\n");
+    a = (unsigned char *)SRAMalloc(sizeof(unsigned char));
+    data = (int *)SRAMalloc(sizeof(int));
+    Name = (unsigned char *)SRAMalloc(9*sizeof(unsigned char));
 
+    *a = 'a';
+    *data=200;
+    *Name='P';
+    *(Name+1)='r';
+    *(Name+2)='a';
+    *(Name+3)='n';
+    *(Name+4)='e';
+    *(Name+5)='y';
+    *(Name+6)='T';
+    *(Name+7)='h';
+    *(Name+8)='\0';
     while(1)
     {
-        printf("a=%c\tdataDec=%d\tdataHex=%x\tName=%s\r\n", a, data, data, Name);
-
+        printf("a=%c\tdataDec=%d\tdataHex=%x\tName=%s\r\n", *a, *data, *data, Name);
+    
     }
-
+    SRAMfree(a);
+    SRAMfree(data);
+    SRAMfree(Name);
 }
 

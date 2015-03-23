@@ -19,6 +19,8 @@
 #include "user.h"
 #include "timers.h"
 #include "usart.h"
+#include "sralloc.h"
+#include "printf.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -93,5 +95,9 @@ void InitApp(void)
     InitializeGPIOs();
     
     EnableInterrupt();
+
+    /* Initialize user defined Software routines here*/
+    init_printf(NULL,putc);
+    SRAMInitHeap();
 }
 
